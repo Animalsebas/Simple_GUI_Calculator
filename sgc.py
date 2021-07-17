@@ -8,105 +8,15 @@ First = True
 res = ""
 sign = "positive"
 #Numbers, First or Second
-def GetNumber1():
+def GetNumber(Num):
     global First
     if First == True:
         global Num1
-        Num1 = Num1 + "1"
+        Num1 = Num1 + str(Num)
         screen_calc.configure(text=str(Num1))
     else:
         global Num2
-        Num2 = Num2 + "1"
-        screen_calc.configure(text=str(Num2))
-def GetNumber2():
-    global First
-    if First == True:
-        global Num1
-        Num1 = Num1 + "2"
-        screen_calc.configure(text=str(Num1))
-    else:
-        global Num2
-        Num2 = Num2 + "2"
-        screen_calc.configure(text=str(Num2))
-def GetNumber3():
-    global First
-    if First == True:
-        global Num1
-        Num1 = Num1 + "3"
-        screen_calc.configure(text=str(Num1))
-    else:
-        global Num2
-        Num2 = Num2 + "3"
-        screen_calc.configure(text=str(Num2))
-def GetNumber4():
-    global First
-    if First == True:
-        global Num1
-        Num1 = Num1 + "4"
-        screen_calc.configure(text=str(Num1))
-    else:
-        global Num2
-        Num2 = Num2 + "4"
-        screen_calc.configure(text=str(Num2))
-def GetNumber5():
-    global First
-    if First == True:
-        global Num1
-        Num1 = Num1 + "5"
-        screen_calc.configure(text=str(Num1))
-    else:
-        global Num2
-        Num2 = Num2 + "5"
-        screen_calc.configure(text=str(Num2))
-def GetNumber6():
-    global First
-    if First == True:
-        global Num1
-        Num1 = Num1 + "6"
-        screen_calc.configure(text=str(Num1))
-    else:
-        global Num2
-        Num2 = Num2 + "6"
-        screen_calc.configure(text=str(Num2))
-def GetNumber7():
-    global First
-    if First == True:
-        global Num1
-        Num1 = Num1 + "7"
-        screen_calc.configure(text=str(Num1))
-    else:
-        global Num2
-        Num2 = Num2 + "7"
-        screen_calc.configure(text=str(Num2))
-def GetNumber8():
-    global First
-    if First == True:
-        global Num1
-        Num1 = Num1 + "8"
-        screen_calc.configure(text=str(Num1))
-    else:
-        global Num2
-        Num2 = Num2 + "8"
-        screen_calc.configure(text=str(Num2))
-def GetNumber9():
-    global First
-    if First == True:
-        global Num1
-        Num1 = Num1 + "9"
-        screen_calc.configure(text=str(Num1))
-    else:
-        global Num2
-        Num2 = Num2 + "9"
-        screen_calc.configure(text=str(Num2))
-def GetNumber0():
-    global First
-    if First == True:
-        global Num1
-        Num1 = Num1 + "0"
-        screen_calc.configure(text=str(Num1))
-    else:
-        global Num2
-        Num2 = Num2 + "0"
+        Num2 = Num2 + str(Num)
         screen_calc.configure(text=str(Num2))
 #Operation Characters
 def GetOpPlus():
@@ -274,36 +184,36 @@ buttonRoot.grid(row=2, column = 1)
 buttonDiv= Button(calc_win, text="/", width=18, height=2, command=GetOpDiv)
 buttonDiv.grid(row=2, column = 2, columnspan=2)
 #7, 8, 9 and multiplication (Row 3)
-button7= Button(calc_win, text="7", width=9, height=2, command=GetNumber7)
+button7= Button(calc_win, text="7", width=9, height=2, command=lambda:GetNumber("7"))
 button7.grid(row=3,column=0, pady=(10))
-button8= Button(calc_win, text="8", width=9, height=2, command=GetNumber8)
+button8= Button(calc_win, text="8", width=9, height=2, command=lambda:GetNumber("8"))
 button8.grid(row=3,column=1)
-button9= Button(calc_win, text="9", width=9, height=2, command=GetNumber9)
+button9= Button(calc_win, text="9", width=9, height=2, command=lambda:GetNumber("9"))
 button9.grid(row=3,column=2)
 buttonMult= Button(calc_win, text="X", width=9, height=2, command=GetOpMult)
 buttonMult.grid(row=3,column=3)
 #4, 5, 6 and Subtraction (Row 4)
-button4= Button(calc_win, text="4", width=9, height=2, command=GetNumber4)
+button4= Button(calc_win, text="4", width=9, height=2, command=lambda:GetNumber("4"))
 button4.grid(row=4,column=0, pady=(10))
-button5= Button(calc_win, text="5", width=9, height=2, command=GetNumber5)
+button5= Button(calc_win, text="5", width=9, height=2, command=lambda:GetNumber("5"))
 button5.grid(row=4,column=1)
-button6= Button(calc_win, text="6", width=9, height=2, command=GetNumber6)
+button6= Button(calc_win, text="6", width=9, height=2, command=lambda:GetNumber("6"))
 button6.grid(row=4,column=2)
 buttonSub= Button(calc_win, text="-", width=9, height=2, command=GetOpMinus)
 buttonSub.grid(row=4,column=3)
 #1, 2, 3 and Add (Row 5)
-button1= Button(calc_win, text="1", width=9, height=2, command=GetNumber1)
+button1= Button(calc_win, text="1", width=9, height=2, command=lambda:GetNumber("1"))
 button1.grid(row=5,column=0, pady=(10))
-button2= Button(calc_win, text="2", width=9, height=2, command=GetNumber2)
+button2= Button(calc_win, text="2", width=9, height=2, command=lambda:GetNumber("2"))
 button2.grid(row=5,column=1)
-button3= Button(calc_win, text="3", width=9, height=2, command=GetNumber3)
+button3= Button(calc_win, text="3", width=9, height=2, command=lambda:GetNumber("3"))
 button3.grid(row=5,column=2)
 buttonAdd= Button(calc_win, text="+", width=9, height=2, command=GetOpPlus)
 buttonAdd.grid(row=5,column=3)
 #+/-, 0, . and Equal (Row 6)
 buttonPlusorminus= Button(calc_win, text="+/-", width=9, height=2, command=GetSign)
 buttonPlusorminus.grid(row=6,column=0, pady=(10))
-button0= Button(calc_win, text="0", width=9, height=2, command=GetNumber0)
+button0= Button(calc_win, text="0", width=9, height=2, command=lambda:GetNumber("0"))
 button0.grid(row=6,column=1)
 buttonDot= Button(calc_win, text=".", width=9, height=2, command=GetDot)
 buttonDot.grid(row=6,column=2)
