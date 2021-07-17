@@ -19,56 +19,20 @@ def GetNumber(Num):
         Num2 = Num2 + str(Num)
         screen_calc.configure(text=str(Num2))
 #Operation Characters
-def GetOpPlus():
+def GetOpNormal(OpfbuttonN):
     global OpCar
     if OpCar == "":
         global First
-        OpCar = "+"
+        OpCar = str(OpfbuttonN)
         First = False
         screen_calc.configure(text="")
     else:
         print("ERROR")
-def GetOpMinus():
+def GetOpDiferent(OpfbuttonF):
     global OpCar
     if OpCar == "":
         global First
-        OpCar = "-"
-        First = False
-        screen_calc.configure(text="")
-    else:
-        print("ERROR")
-def GetOpDiv():
-    global OpCar
-    if OpCar == "":
-        global First
-        OpCar = "/"
-        First = False
-        screen_calc.configure(text="")
-    else:
-        print("ERROR")
-def GetOpMult():
-    global OpCar
-    if OpCar == "":
-        global First
-        OpCar = "X"
-        First = False
-        screen_calc.configure(text="")
-    else:
-        print("ERROR")
-def GetOpSquare():
-    global OpCar
-    if OpCar == "":
-        global First
-        OpCar = "^"
-        First = True
-        screen_calc.configure(text="")
-    else:
-        print("ERROR")
-def GetOpRoot():
-    global OpCar
-    if OpCar == "":
-        global First
-        OpCar = "root"
+        OpCar = str(OpfbuttonF)
         First = True
         screen_calc.configure(text="")
     else:
@@ -77,10 +41,10 @@ def GetDel():
     global Num1
     global Num2
     if First == True:
-        Num1 = Num1.rstrip(Num1[-1])
+        Num1 = Num1[:-1]
         screen_calc.configure(text=Num1)
     else:
-        Num2 = Num2.rstrip(Num2[-1])
+        Num2 = Num2[:-1]
         screen_calc.configure(text=Num2)
 def GetCE():
     global OpCar
@@ -177,11 +141,11 @@ buttonClear.grid(row=1, column = 0, columnspan=2)
 buttonDelete= Button(calc_win, text="DEL", width=18, height=2, command=GetDel)
 buttonDelete.grid(row=1, column = 2, columnspan=2)
 #Square, square root and division (Row 2)
-buttonSquare= Button(calc_win, text="X^2", width=9, height=2, command=GetOpSquare)
+buttonSquare= Button(calc_win, text="X^2", width=9, height=2, command=lambda:GetOpDiferent("^"))
 buttonSquare.grid(row=2, column = 0, pady=(10))
-buttonRoot= Button(calc_win, text="√X", width=9, height=2, command=GetOpRoot)
+buttonRoot= Button(calc_win, text="√X", width=9, height=2, command=lambda:GetOpDiferent("root"))
 buttonRoot.grid(row=2, column = 1)
-buttonDiv= Button(calc_win, text="/", width=18, height=2, command=GetOpDiv)
+buttonDiv= Button(calc_win, text="/", width=18, height=2, command=lambda:GetOpNormal("/"))
 buttonDiv.grid(row=2, column = 2, columnspan=2)
 #7, 8, 9 and multiplication (Row 3)
 button7= Button(calc_win, text="7", width=9, height=2, command=lambda:GetNumber("7"))
@@ -190,7 +154,7 @@ button8= Button(calc_win, text="8", width=9, height=2, command=lambda:GetNumber(
 button8.grid(row=3,column=1)
 button9= Button(calc_win, text="9", width=9, height=2, command=lambda:GetNumber("9"))
 button9.grid(row=3,column=2)
-buttonMult= Button(calc_win, text="X", width=9, height=2, command=GetOpMult)
+buttonMult= Button(calc_win, text="X", width=9, height=2, command=lambda:GetOpNormal("X"))
 buttonMult.grid(row=3,column=3)
 #4, 5, 6 and Subtraction (Row 4)
 button4= Button(calc_win, text="4", width=9, height=2, command=lambda:GetNumber("4"))
@@ -199,7 +163,7 @@ button5= Button(calc_win, text="5", width=9, height=2, command=lambda:GetNumber(
 button5.grid(row=4,column=1)
 button6= Button(calc_win, text="6", width=9, height=2, command=lambda:GetNumber("6"))
 button6.grid(row=4,column=2)
-buttonSub= Button(calc_win, text="-", width=9, height=2, command=GetOpMinus)
+buttonSub= Button(calc_win, text="-", width=9, height=2, command=lambda:GetOpNormal("-"))
 buttonSub.grid(row=4,column=3)
 #1, 2, 3 and Add (Row 5)
 button1= Button(calc_win, text="1", width=9, height=2, command=lambda:GetNumber("1"))
@@ -208,7 +172,7 @@ button2= Button(calc_win, text="2", width=9, height=2, command=lambda:GetNumber(
 button2.grid(row=5,column=1)
 button3= Button(calc_win, text="3", width=9, height=2, command=lambda:GetNumber("3"))
 button3.grid(row=5,column=2)
-buttonAdd= Button(calc_win, text="+", width=9, height=2, command=GetOpPlus)
+buttonAdd= Button(calc_win, text="+", width=9, height=2, command=lambda:GetOpNormal("+"))
 buttonAdd.grid(row=5,column=3)
 #+/-, 0, . and Equal (Row 6)
 buttonPlusorminus= Button(calc_win, text="+/-", width=9, height=2, command=GetSign)
