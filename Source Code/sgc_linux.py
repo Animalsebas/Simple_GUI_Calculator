@@ -154,13 +154,13 @@ def Equal():
     First = False
 #################################################################################
 #GUI
-#Window config
+#Window config (Change values if you need to)
 calc_win = Tk()
-calc_win.geometry("300x460")
-calc_win.resizable(False, False)
+calc_win.geometry("400x500")
+calc_win.resizable(True, True)
 calc_win.title("Simple GUI Calculator")
-calc_win.iconbitmap("./windowIcon.ico")
 calc_win.configure(bg="gray20")
+#icon bug in linux... sorry
 #Screen Acumulative label (Row 0)
 screenA_calc = Label(calc_win, text="", width=21, height=1, bg="white", anchor="w")
 screenA_calc.grid(row=0, columnspan=2, column=2, pady=(5))
