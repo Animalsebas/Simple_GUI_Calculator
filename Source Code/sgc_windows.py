@@ -2,6 +2,8 @@ from tkinter import *
 import math
 from idlelib.tooltip import Hovertip
 from decimal import Decimal
+import os
+import sys
 #Functionality
 Num1 = ""
 Num2 = ""
@@ -152,6 +154,16 @@ def Equal():
     Num2 = ""
     res = ""
     First = False
+def OpenSettings():
+    GetCE()
+    calc_win.destroy
+    settings_win = Tk()
+    settings_win.geometry("200x360")
+    settings_win.resizable(True, True)
+    settings_win.title("Settings")
+    settings_win.iconbitmap((os.path.join(sys.path[0], "windowIcon.ico")))
+    settings_win.configure(bg="gray20")
+    settings_win.mainloop()
 #################################################################################
 #GUI
 #Window config
@@ -159,8 +171,11 @@ calc_win = Tk()
 calc_win.geometry("300x460")
 calc_win.resizable(True, True)
 calc_win.title("Simple GUI Calculator")
-calc_win.iconbitmap("./windowIcon.ico")
+calc_win.iconbitmap((os.path.join(sys.path[0], "windowIcon.ico")))
 calc_win.configure(bg="gray20")
+#Settings button
+buttonSettings= Button(calc_win, text="Settings", width=18, height=1, command=OpenSettings)
+buttonSettings.grid(row=0, column = 0, columnspan=2)
 #Screen Acumulative label (Row 0)
 screenA_calc = Label(calc_win, text="", width=21, height=1, bg="white", anchor="w")
 screenA_calc.grid(row=0, columnspan=2, column=2, pady=(5))
