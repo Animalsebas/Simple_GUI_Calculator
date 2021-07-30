@@ -1,7 +1,7 @@
 from tkinter import *
-from tkinter.tix import *
-from math import *
-from decimal import *
+import math
+from idlelib.tooltip import Hovertip
+from decimal import Decimal
 #Functionality
 Num1 = ""
 Num2 = ""
@@ -140,7 +140,7 @@ def Equal():
         res = float(Num1)*float(Num1)
         print(res)
     elif OpCar == "root":
-        res = sqrt(float(Num1))
+        res = math.sqrt(float(Num1))
         print(res)
     else:
         pass
@@ -217,47 +217,46 @@ buttonEqual= Button(calc_win, text="=", width=9, height=2, command=Equal)
 buttonEqual.grid(row=7,column=3)
 ##########################################
 #Key Bindings
-tip = Balloon(calc_win)
 calc_win.bind('1', lambda event: GetNumber("1"))
-tip.bind_widget(button1 ,balloonmsg="1")
+Hovertip(button1, '1')
 calc_win.bind('2', lambda event: GetNumber("2"))
-tip.bind_widget(button2 ,balloonmsg="2")
+Hovertip(button2, '2')
 calc_win.bind('3', lambda event: GetNumber("3"))
-tip.bind_widget(button3 ,balloonmsg="3")
+Hovertip(button3, '3')
 calc_win.bind('4', lambda event: GetNumber("4"))
-tip.bind_widget(button4 ,balloonmsg="4")
+Hovertip(button4, '4')
 calc_win.bind('5', lambda event: GetNumber("5"))
-tip.bind_widget(button5 ,balloonmsg="5")
+Hovertip(button5, '5')
 calc_win.bind('6', lambda event: GetNumber("6"))
-tip.bind_widget(button6 ,balloonmsg="6")
+Hovertip(button6, '6')
 calc_win.bind('7', lambda event: GetNumber("7"))
-tip.bind_widget(button7 ,balloonmsg="7")
+Hovertip(button7, '7')
 calc_win.bind('8', lambda event: GetNumber("8"))
-tip.bind_widget(button8 ,balloonmsg="8")
+Hovertip(button8, '8')
 calc_win.bind('9', lambda event: GetNumber("9"))
-tip.bind_widget(button9 ,balloonmsg="9")
+Hovertip(button9, '9')
 calc_win.bind('0', lambda event: GetNumber("0"))
-tip.bind_widget(button0 ,balloonmsg="0")
+Hovertip(button0, '0')
 calc_win.bind('+', lambda event: GetOpNormal("+"))
-tip.bind_widget(buttonAdd ,balloonmsg="+")
+Hovertip(buttonAdd, '+')
 calc_win.bind('-', lambda event: GetOpNormal("-"))
-tip.bind_widget(buttonSub ,balloonmsg="-")
+Hovertip(buttonSub, '-')
 calc_win.bind('*', lambda event: GetOpNormal("x"))
-tip.bind_widget(buttonMult ,balloonmsg="*")
+Hovertip(buttonMult, '*')
 calc_win.bind('/', lambda event: GetOpNormal("/"))
-tip.bind_widget(buttonDiv ,balloonmsg="/")
+Hovertip(buttonDiv, '/')
 calc_win.bind('.', lambda event: GetDot())
-tip.bind_widget(buttonDot ,balloonmsg=".")
+Hovertip(buttonDot, '.')
 calc_win.bind('<Return>', lambda event: Equal())
-tip.bind_widget(buttonEqual ,balloonmsg="Enter")
+Hovertip(buttonEqual, 'Enter')
 calc_win.bind('<Alt-s>', lambda event: GetSign())
-tip.bind_widget(buttonPlusorminus ,balloonmsg="Alt+s")
+Hovertip(buttonPlusorminus, 'Alt+s')
 calc_win.bind('<Alt-c>', lambda event: GetCE())
-tip.bind_widget(buttonClear ,balloonmsg="Alt+c")
+Hovertip(buttonClear, 'Alt+c')
 calc_win.bind('<Alt-r>', lambda event: GetOpDiferent("root"))
-tip.bind_widget(buttonRoot ,balloonmsg="Alt+r")
+Hovertip(buttonRoot, 'Alt+r')
 calc_win.bind('<Alt-q>', lambda event: GetOpDiferent("^"))
-tip.bind_widget(buttonSquare ,balloonmsg="Alt+q")
+Hovertip(buttonSquare, 'Alt+q')
 calc_win.bind('<BackSpace>', lambda event: GetDel())
-tip.bind_widget(buttonDelete ,balloonmsg="Delete")
+Hovertip(buttonDelete, 'Delete')
 calc_win.mainloop()
