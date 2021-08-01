@@ -4,6 +4,7 @@ from idlelib.tooltip import Hovertip
 from decimal import Decimal
 import os
 import sys
+import re
 #Functionality
 Num1 = ""
 Num2 = ""
@@ -12,6 +13,9 @@ First = True
 res = ""
 sign = "positive"
 Acum = ""
+size_calcwin = ""
+width_calcwin = ""
+height_calcwin = ""
 #Numbers, First or Second
 def GetNumber(Num):
     global First
@@ -155,20 +159,75 @@ def Equal():
     res = ""
     First = False
 def OpenSettings():
+    def SaveSettings():
+        #Calculator window changes
+        global size_calcwin
+        global height_calcwin
+        global width_calcwin
+        height_calcwin = entertext_height.get()
+        width_calcwin = entertext_width.get()
+        size_calcwin = str(str(width_calcwin)+"x"+str(height_calcwin))
+        calc_win.geometry(size_calcwin)
+        #Save to txt
+        file = open((os.path.join(sys.path[0], "settings.txt")),"r+")
+        file.truncate(0)
+        file.close()
+        contenido = open((os.path.join(sys.path[0], "settings.txt"))).read().splitlines()
+        contenido.insert(1,"#Calculator window settings")
+        contenido.insert(1,("Height = "+str(height_calcwin)))
+        contenido.insert(2,("Width = "+str(width_calcwin)))
+        f = open((os.path.join(sys.path[0], "settings.txt")), "w")
+        f.writelines("\n".join(contenido))
+        f.close
+    global width_calcwin
+    global height_calcwin
     GetCE()
-    calc_win.destroy
     settings_win = Tk()
-    settings_win.geometry("200x360")
+    settings_win.geometry("250x360")
     settings_win.resizable(True, True)
     settings_win.title("Settings")
     settings_win.iconbitmap((os.path.join(sys.path[0], "windowIcon.ico")))
     settings_win.configure(bg="gray20")
+    labeltitle1 = Label(settings_win, text="Calculator Window Settings", width="25")
+    labeltitle1.pack(pady=10)
+    labelwidth = Label(settings_win, text="Width: ", width="12")
+    labelwidth.pack(pady=10)
+    entertext_width = Entry(settings_win, width = "12")
+    entertext_width.insert(0, width_calcwin)
+    entertext_width.pack(pady=10)
+    labelheight = Label(settings_win, text="Height: ", width="12")
+    labelheight.pack(pady=10)
+    entertext_height = Entry(settings_win, width = "12")
+    entertext_height.insert(0, height_calcwin)
+    entertext_height.pack(pady=10)
+    buttonSave = Button(settings_win, text="Save", width=18, height=1, command=SaveSettings)
+    buttonSave.pack(pady=10)
     settings_win.mainloop()
+def Get_Calcwin_winsize():
+    global size_calcwin
+    global height_calcwin
+    global width_calcwin
+    with open((os.path.join(sys.path[0], "settings.txt"))) as f:
+        size_list = f.readlines()[1:3]
+    f.close
+    height_calcwin = size_list[0]
+    width_calcwin = size_list[1]
+    height_calcwin = re.sub("[A-Za-z]","",height_calcwin)
+    width_calcwin = re.sub("[A-Za-z]","",width_calcwin)
+    height_calcwin = re.sub("[\n]","",height_calcwin)
+    width_calcwin = re.sub("[\n]","",width_calcwin)
+    height_calcwin = re.sub("[= ]","",height_calcwin)
+    width_calcwin = re.sub("[= ]","",width_calcwin)
+    size_calcwin = str(str(width_calcwin)+"x"+str(height_calcwin))
+    print(height_calcwin)
+    print(width_calcwin)
+    print (size_calcwin)
 #################################################################################
 #GUI
 #Window config
 calc_win = Tk()
-calc_win.geometry("300x460")
+Get_Calcwin_winsize()
+calc_win.geometry(size_calcwin)
 calc_win.resizable(True, True)
 calc_win.title("Simple GUI Calculator")
 calc_win.iconbitmap((os.path.join(sys.path[0], "windowIcon.ico")))

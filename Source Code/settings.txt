@@ -1,0 +1,3 @@
+#Calculator window settings
+Height = 460
+Width = 300
