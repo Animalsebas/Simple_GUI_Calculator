@@ -16,6 +16,9 @@ Acum = ""
 size_calcwin = ""
 width_calcwin = ""
 height_calcwin = ""
+Buttonwidthx1 = ""
+Buttonwidthx2 = ""
+ButtonHeight = ""
 #Numbers, First or Second
 def GetNumber(Num):
     global First
@@ -164,54 +167,96 @@ def OpenSettings():
         global size_calcwin
         global height_calcwin
         global width_calcwin
+        global Buttonwidthx1
+        global Buttonwidthx2
+        global ButtonHeight
         height_calcwin = entertext_height.get()
         width_calcwin = entertext_width.get()
+        Buttonwidthx1 = entertext_width_buttonx1.get()
+        Buttonwidthx2 = entertext_width_buttonx2.get()
+        ButtonHeight = entertext_height_button.get()
         size_calcwin = str(str(width_calcwin)+"x"+str(height_calcwin))
-        calc_win.geometry(size_calcwin)
         #Save to txt
         file = open((os.path.join(sys.path[0], "settings.txt")),"r+")
         file.truncate(0)
         file.close()
         contenido = open((os.path.join(sys.path[0], "settings.txt"))).read().splitlines()
-        contenido.insert(1,"#Calculator window settings")
+        contenido.insert(0,"#Calculator window settings")
         contenido.insert(1,("Height = "+str(height_calcwin)))
         contenido.insert(2,("Width = "+str(width_calcwin)))
+        contenido.insert(3,("ButtonxOneWidth = "+str(Buttonwidthx1)))
+        contenido.insert(4,("ButtonxTwoWidth = "+str(Buttonwidthx2)))
+        contenido.insert(5,("ButtonsHeight  = "+str(ButtonHeight)))
         f = open((os.path.join(sys.path[0], "settings.txt")), "w")
         f.writelines("\n".join(contenido))
         f.close
+        settings_win.destroy()
+        calc_win.destroy()
     global width_calcwin
     global height_calcwin
+    global Buttonwidthx2
+    global Buttonwidthx1
+    global ButtonHeight
     GetCE()
     settings_win = Tk()
-    settings_win.geometry("250x360")
+    settings_win.geometry("250x450")
     settings_win.resizable(True, True)
     settings_win.title("Settings")
     settings_win.iconbitmap((os.path.join(sys.path[0], "windowIcon.ico")))
     settings_win.configure(bg="gray20")
     labeltitle1 = Label(settings_win, text="Calculator Window Settings", width="25")
-    labeltitle1.pack(pady=10)
+    labeltitle1.pack(pady=2)
     labelwidth = Label(settings_win, text="Width: ", width="12")
-    labelwidth.pack(pady=10)
+    labelwidth.pack(pady=2)
     entertext_width = Entry(settings_win, width = "12")
     entertext_width.insert(0, width_calcwin)
-    entertext_width.pack(pady=10)
+    entertext_width.pack(pady=2)
     labelheight = Label(settings_win, text="Height: ", width="12")
-    labelheight.pack(pady=10)
+    labelheight.pack(pady=2)
     entertext_height = Entry(settings_win, width = "12")
     entertext_height.insert(0, height_calcwin)
-    entertext_height.pack(pady=10)
-    buttonSave = Button(settings_win, text="Save", width=18, height=1, command=SaveSettings)
-    buttonSave.pack(pady=10)
+    entertext_height.pack(pady=2)
+    labeltitle1_1 = Label(settings_win, text="Calculator Buttons Settings", width="25")
+    labeltitle1_1.pack(pady=2)
+    labeltitle1_1_1 = Label(settings_win, text="Button x1 Width", width="18")
+    labeltitle1_1_1.pack(pady=2)
+    labelwidth_buttonx1 = Label(settings_win, text="Width: ", width="12")
+    labelwidth_buttonx1.pack(pady=2)
+    entertext_width_buttonx1 = Entry(settings_win, width = "12")
+    entertext_width_buttonx1.insert(0, Buttonwidthx1)
+    entertext_width_buttonx1.pack(pady=2)
+    labeltitle1_1_2 = Label(settings_win, text="Button x2 Width", width="18")
+    labeltitle1_1_2.pack(pady=2)
+    labelwidth_buttonx2 = Label(settings_win, text="Width: ", width="12")
+    labelwidth_buttonx2.pack(pady=2)
+    entertext_width_buttonx2 = Entry(settings_win, width = "12")
+    entertext_width_buttonx2.insert(0, Buttonwidthx2)
+    entertext_width_buttonx2.pack(pady=2)
+    labeltitle1_1_2 = Label(settings_win, text="Buttons Height", width="18")
+    labeltitle1_1_2.pack(pady=2)
+    labelheight_button = Label(settings_win, text="Height: ", width="12")
+    labelheight_button.pack(pady=2)
+    entertext_height_button = Entry(settings_win, width = "12")
+    entertext_height_button.insert(0, ButtonHeight)
+    entertext_height_button.pack(pady=10)
+    buttonSave = Button(settings_win, text="Save and exit", width=25, height=1, command=SaveSettings)
+    buttonSave.pack(pady=2)
     settings_win.mainloop()
-def Get_Calcwin_winsize():
+def Get_Calcwin_sizes():
     global size_calcwin
     global height_calcwin
     global width_calcwin
+    global Buttonwidthx1
+    global Buttonwidthx2
+    global ButtonHeight
     with open((os.path.join(sys.path[0], "settings.txt"))) as f:
-        size_list = f.readlines()[1:3]
+        size_list = f.readlines()[1:6]
     f.close
     height_calcwin = size_list[0]
     width_calcwin = size_list[1]
+    Buttonwidthx1 = size_list[2]
+    Buttonwidthx2 = size_list[3]
+    ButtonHeight = size_list[4]
     height_calcwin = re.sub("[A-Za-z]","",height_calcwin)
     width_calcwin = re.sub("[A-Za-z]","",width_calcwin)
     height_calcwin = re.sub("[\n]","",height_calcwin)
@@ -219,14 +264,26 @@ def Get_Calcwin_winsize():
     height_calcwin = re.sub("[= ]","",height_calcwin)
     width_calcwin = re.sub("[= ]","",width_calcwin)
     size_calcwin = str(str(width_calcwin)+"x"+str(height_calcwin))
+    Buttonwidthx1 = re.sub("[A-Za-z]","",Buttonwidthx1)
+    Buttonwidthx1 = re.sub("[\n]","",Buttonwidthx1)
+    Buttonwidthx1 = re.sub("[= ]","",Buttonwidthx1)
+    Buttonwidthx2 = re.sub("[A-Za-z]","",Buttonwidthx2)
+    Buttonwidthx2 = re.sub("[\n]","",Buttonwidthx2)
+    Buttonwidthx2 = re.sub("[= ]","",Buttonwidthx2)
+    ButtonHeight = re.sub("[A-Za-z]","",ButtonHeight)
+    ButtonHeight = re.sub("[\n]","",ButtonHeight)
+    ButtonHeight = re.sub("[= ]","",ButtonHeight)
     print(height_calcwin)
     print(width_calcwin)
     print (size_calcwin)
+    print(Buttonwidthx1)
+    print(Buttonwidthx2)
+    print(ButtonHeight)
 #################################################################################
 #GUI
 #Window config
 calc_win = Tk()
-Get_Calcwin_winsize()
+Get_Calcwin_sizes()
 calc_win.geometry(size_calcwin)
 calc_win.resizable(True, True)
 calc_win.title("Simple GUI Calculator")
@@ -242,52 +299,52 @@ screenA_calc.grid(row=0, columnspan=2, column=2, pady=(5))
 screen_calc = Label(calc_win, text="", width=42, height=3, bg="white", anchor="w")
 screen_calc.grid(row=1, columnspan=4, pady=(15))
 #Clear and delete button (Row 2)
-buttonClear= Button(calc_win, text="CE", width=18, height=2, command=GetCE)
+buttonClear= Button(calc_win, text="CE", width=Buttonwidthx2, height=ButtonHeight, command=GetCE)
 buttonClear.grid(row=2, column = 0, columnspan=2)
-buttonDelete= Button(calc_win, text="DEL", width=18, height=2, command=GetDel)
+buttonDelete= Button(calc_win, text="DEL", width=Buttonwidthx2, height=ButtonHeight, command=GetDel)
 buttonDelete.grid(row=2, column = 2, columnspan=2)
 #Square, square root and division (Row 3)
-buttonSquare= Button(calc_win, text="X^2", width=9, height=2, command=lambda:GetOpDiferent("^"))
+buttonSquare= Button(calc_win, text="X^2", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetOpDiferent("^"))
 buttonSquare.grid(row=3, column = 0, pady=(10))
-buttonRoot= Button(calc_win, text="√X", width=9, height=2, command=lambda:GetOpDiferent("root"))
+buttonRoot= Button(calc_win, text="√X", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetOpDiferent("root"))
 buttonRoot.grid(row=3, column = 1)
-buttonDiv= Button(calc_win, text="/", width=18, height=2, command=lambda:GetOpNormal("/"))
+buttonDiv= Button(calc_win, text="/", width=Buttonwidthx2, height=ButtonHeight, command=lambda:GetOpNormal("/"))
 buttonDiv.grid(row=3, column = 2, columnspan=2)
 #7, 8, 9 and multiplication (Row 4)
-button7= Button(calc_win, text="7", width=9, height=2, command=lambda:GetNumber("7"))
+button7= Button(calc_win, text="7", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetNumber("7"))
 button7.grid(row=4,column=0, pady=(10))
-button8= Button(calc_win, text="8", width=9, height=2, command=lambda:GetNumber("8"))
+button8= Button(calc_win, text="8", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetNumber("8"))
 button8.grid(row=4,column=1)
-button9= Button(calc_win, text="9", width=9, height=2, command=lambda:GetNumber("9"))
+button9= Button(calc_win, text="9", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetNumber("9"))
 button9.grid(row=4,column=2)
-buttonMult= Button(calc_win, text="X", width=9, height=2, command=lambda:GetOpNormal("x"))
+buttonMult= Button(calc_win, text="X", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetOpNormal("x"))
 buttonMult.grid(row=4,column=3)
 #4, 5, 6 and Subtraction (Row 5)
-button4= Button(calc_win, text="4", width=9, height=2, command=lambda:GetNumber("4"))
+button4= Button(calc_win, text="4", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetNumber("4"))
 button4.grid(row=5,column=0, pady=(10))
-button5= Button(calc_win, text="5", width=9, height=2, command=lambda:GetNumber("5"))
+button5= Button(calc_win, text="5", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetNumber("5"))
 button5.grid(row=5,column=1)
-button6= Button(calc_win, text="6", width=9, height=2, command=lambda:GetNumber("6"))
+button6= Button(calc_win, text="6", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetNumber("6"))
 button6.grid(row=5,column=2)
-buttonSub= Button(calc_win, text="-", width=9, height=2, command=lambda:GetOpNormal("-"))
+buttonSub= Button(calc_win, text="-", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetOpNormal("-"))
 buttonSub.grid(row=5,column=3)
 #1, 2, 3 and Add (Row 6)
-button1= Button(calc_win, text="1", width=9, height=2, command=lambda:GetNumber("1"))
+button1= Button(calc_win, text="1", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetNumber("1"))
 button1.grid(row=6,column=0, pady=(10))
-button2= Button(calc_win, text="2", width=9, height=2, command=lambda:GetNumber("2"))
+button2= Button(calc_win, text="2", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetNumber("2"))
 button2.grid(row=6,column=1)
-button3= Button(calc_win, text="3", width=9, height=2, command=lambda:GetNumber("3"))
+button3= Button(calc_win, text="3", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetNumber("3"))
 button3.grid(row=6,column=2)
-buttonAdd= Button(calc_win, text="+", width=9, height=2, command=lambda:GetOpNormal("+"))
+buttonAdd= Button(calc_win, text="+", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetOpNormal("+"))
 buttonAdd.grid(row=6,column=3)
 #+/-, 0, . and Equal (Row 7)
-buttonPlusorminus= Button(calc_win, text="+/-", width=9, height=2, command=GetSign)
+buttonPlusorminus= Button(calc_win, text="+/-", width=Buttonwidthx1, height=ButtonHeight, command=GetSign)
 buttonPlusorminus.grid(row=7,column=0, pady=(10))
-button0= Button(calc_win, text="0", width=9, height=2, command=lambda:GetNumber("0"))
+button0= Button(calc_win, text="0", width=Buttonwidthx1, height=ButtonHeight, command=lambda:GetNumber("0"))
 button0.grid(row=7,column=1)
-buttonDot= Button(calc_win, text=".", width=9, height=2, command=GetDot)
+buttonDot= Button(calc_win, text=".", width=Buttonwidthx1, height=ButtonHeight, command=GetDot)
 buttonDot.grid(row=7,column=2)
-buttonEqual= Button(calc_win, text="=", width=9, height=2, command=Equal)
+buttonEqual= Button(calc_win, text="=", width=Buttonwidthx1, height=ButtonHeight, command=Equal)
 buttonEqual.grid(row=7,column=3)
 ##########################################
 #Key Bindings
