@@ -5,7 +5,9 @@ from decimal import Decimal
 import os
 import sys
 import re
+################################################################################
 #Functionality
+#Initial Variables
 Num1 = ""
 Num2 = ""
 OpCar = ""
@@ -19,7 +21,7 @@ height_calcwin = ""
 Buttonwidthx1 = ""
 Buttonwidthx2 = ""
 ButtonHeight = ""
-#Numbers, First or Second
+#Saving Numbers, First or Second
 def GetNumber(Num):
     global First
     global Acum
@@ -35,7 +37,7 @@ def GetNumber(Num):
         Acum = Acum + " " + str(Num2)
         screen_calc.configure(text=str(Num2))
         screenA_calc.configure(text=str(Acum))
-#Operation Characters
+#Operation Characters: +, -, /, x
 def GetOpNormal(OpfbuttonN):
     global OpCar
     if OpCar == "":
@@ -48,6 +50,7 @@ def GetOpNormal(OpfbuttonN):
         screen_calc.configure(text="")
     else:
         print("ERROR")
+#Operation Characters: square and square root
 def GetOpDiferent(OpfbuttonF):
     global OpCar
     global Acum
@@ -60,6 +63,7 @@ def GetOpDiferent(OpfbuttonF):
         screenA_calc.configure(text=Acum)
     else:
         print("ERROR")
+#Delete a character
 def GetDel():
     global Num1
     global Num2
@@ -74,6 +78,7 @@ def GetDel():
         Acum = Acum[:-1]
         screen_calc.configure(text=Num2)
         screenA_calc.configure(text=Acum)
+#Clear all
 def GetCE():
     global OpCar
     global First
@@ -87,6 +92,7 @@ def GetCE():
     First = True
     screen_calc.configure(text="")
     screenA_calc.configure(text="")
+#Add a dot to the operation
 def GetDot():
     global First
     global Num1
@@ -100,6 +106,7 @@ def GetDot():
     else:
         Num2 = Num2 + "."
         screen_calc.configure(text=Num2)
+#Change the sign of the current number
 def GetSign():
     global sign
     global Num1
@@ -161,6 +168,7 @@ def Equal():
     Num2 = ""
     res = ""
     First = False
+#Settings protocol
 def OpenSettings():
     def SaveSettings():
         #Calculator window changes
@@ -242,6 +250,7 @@ def OpenSettings():
     buttonSave = Button(settings_win, text="Save and exit", width=25, height=1, command=SaveSettings)
     buttonSave.pack(pady=2)
     settings_win.mainloop()
+#Get settings parameters
 def Get_Calcwin_sizes():
     global size_calcwin
     global height_calcwin
@@ -347,7 +356,7 @@ buttonDot.grid(row=7,column=2)
 buttonEqual= Button(calc_win, text="=", width=Buttonwidthx1, height=ButtonHeight, command=Equal)
 buttonEqual.grid(row=7,column=3)
 ##########################################
-#Key Bindings
+#Key Bindings and Hover tips
 calc_win.bind('1', lambda event: GetNumber("1"))
 Hovertip(button1, '1')
 calc_win.bind('2', lambda event: GetNumber("2"))
