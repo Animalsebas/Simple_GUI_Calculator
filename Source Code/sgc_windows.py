@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import math
 from idlelib.tooltip import Hovertip
 from decimal import Decimal
@@ -21,6 +22,10 @@ height_calcwin = ""
 Buttonwidthx1 = ""
 Buttonwidthx2 = ""
 ButtonHeight = ""
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
 #Saving Numbers, First or Second
 def GetNumber(Num):
     global First
@@ -34,9 +39,7 @@ def GetNumber(Num):
     else:
         global Num2
         Num2 = Num2 + str(Num)
-        Acum = Acum + " " + str(Num2)
         screen_calc.configure(text=str(Num2))
-        screenA_calc.configure(text=str(Acum))
 #Operation Characters: +, -, /, x
 def GetOpNormal(OpfbuttonN):
     global OpCar
@@ -170,6 +173,7 @@ def Equal():
     First = False
 #Settings protocol
 def OpenSettings():
+    buttonSettings.configure(state= DISABLED)
     def SaveSettings():
         #Calculator window changes
         global size_calcwin
@@ -185,17 +189,17 @@ def OpenSettings():
         ButtonHeight = entertext_height_button.get()
         size_calcwin = str(str(width_calcwin)+"x"+str(height_calcwin))
         #Save to txt
-        file = open((os.path.join(sys.path[0], "settings.txt")),"r+")
+        file = open(resource_path("settings.txt"),"r+")
         file.truncate(0)
         file.close()
-        contenido = open((os.path.join(sys.path[0], "settings.txt"))).read().splitlines()
+        contenido = open(resource_path("settings.txt")).read().splitlines()
         contenido.insert(0,"#Calculator window settings")
         contenido.insert(1,("Height = "+str(height_calcwin)))
         contenido.insert(2,("Width = "+str(width_calcwin)))
         contenido.insert(3,("ButtonxOneWidth = "+str(Buttonwidthx1)))
         contenido.insert(4,("ButtonxTwoWidth = "+str(Buttonwidthx2)))
         contenido.insert(5,("ButtonsHeight  = "+str(ButtonHeight)))
-        f = open((os.path.join(sys.path[0], "settings.txt")), "w")
+        f = open(resource_path("settings.txt"), "w")
         f.writelines("\n".join(contenido))
         f.close
         settings_win.destroy()
@@ -206,7 +210,13 @@ def OpenSettings():
     global Buttonwidthx1
     global ButtonHeight
     GetCE()
+    #Settings GUI
     settings_win = Tk()
+    def on_closing():
+        if messagebox.askokcancel("Exit", "Exit without aplying changes?"):
+            buttonSettings.configure(state= NORMAL)
+            settings_win.destroy()
+    settings_win.protocol("WM_DELETE_WINDOW", on_closing)
     settings_win.geometry("250x450")
     settings_win.resizable(True, True)
     settings_win.title("Settings")
@@ -249,6 +259,8 @@ def OpenSettings():
     entertext_height_button.pack(pady=10)
     buttonSave = Button(settings_win, text="Save and exit", width=25, height=1, command=SaveSettings)
     buttonSave.pack(pady=2)
+    buttonSave = Button(settings_win, text="Restore defaults", width=25, height=1, command=reset_default_config)
+    buttonSave.pack(pady=2)
     settings_win.mainloop()
 #Get settings parameters
 def Get_Calcwin_sizes():
@@ -258,7 +270,7 @@ def Get_Calcwin_sizes():
     global Buttonwidthx1
     global Buttonwidthx2
     global ButtonHeight
-    with open((os.path.join(sys.path[0], "settings.txt"))) as f:
+    with open(resource_path("settings.txt")) as f:
         size_list = f.readlines()[1:6]
     f.close
     height_calcwin = size_list[0]
@@ -288,6 +300,16 @@ def Get_Calcwin_sizes():
     print(Buttonwidthx1)
     print(Buttonwidthx2)
     print(ButtonHeight)
+def reset_default_config():
+    config_file = open(resource_path("settings.txt"), "w")
+    config_file.truncate()
+    config_file.close()
+    default_config_list = ["#Calculator window settings\n","Height = 460\n", "Width = 300\n", "ButtonxOneWidth = 9\n", "ButtonxTwoWidth = 18\n", "ButtonsHeight  = 2\n"]
+    config_file = open(resource_path("settings.txt"), "w")
+    for config in default_config_list:
+        config_file.write(config)
+    config_file.close()
+    sys.exit()
 #################################################################################
 #GUI
 #Window config
@@ -355,6 +377,9 @@ buttonDot= Button(calc_win, text=".", width=Buttonwidthx1, height=ButtonHeight, 
 buttonDot.grid(row=7,column=2)
 buttonEqual= Button(calc_win, text="=", width=Buttonwidthx1, height=ButtonHeight, command=Equal)
 buttonEqual.grid(row=7,column=3)
+#info
+info_label = Label(calc_win, text="Baskerville Inc. SH. v1.3", width=21, height=1, bg="gray", anchor="w", fg="white")
+info_label.grid(row=8, columnspan=4, column=0)
 ##########################################
 #Key Bindings and Hover tips
 calc_win.bind('1', lambda event: GetNumber("1"))
