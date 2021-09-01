@@ -220,7 +220,7 @@ def OpenSettings():
     settings_win.geometry("250x450")
     settings_win.resizable(True, True)
     settings_win.title("Settings")
-    settings_win.iconbitmap((os.path.join(sys.path[0], "windowIcon.ico")))
+    settings_win.iconbitmap(resource_path("windowIcon.ico"))
     settings_win.configure(bg="gray20")
     labeltitle1 = Label(settings_win, text="Calculator Window Settings", width="25")
     labeltitle1.pack(pady=2)
@@ -270,6 +270,7 @@ def Get_Calcwin_sizes():
     global Buttonwidthx1
     global Buttonwidthx2
     global ButtonHeight
+    print(str(resource_path("settings.txt")))
     with open(resource_path("settings.txt")) as f:
         size_list = f.readlines()[1:6]
     f.close
@@ -318,7 +319,7 @@ Get_Calcwin_sizes()
 calc_win.geometry(size_calcwin)
 calc_win.resizable(True, True)
 calc_win.title("Simple GUI Calculator")
-calc_win.iconbitmap((os.path.join(sys.path[0], "windowIcon.ico")))
+calc_win.iconbitmap(resource_path("windowIcon.ico"))
 calc_win.configure(bg="gray20")
 #Settings button
 buttonSettings= Button(calc_win, text="Settings", width=18, height=1, command=OpenSettings)
