@@ -305,7 +305,7 @@ def reset_default_config():
     config_file = open(resource_path("settings.txt"), "w")
     config_file.truncate()
     config_file.close()
-    default_config_list = ["#Calculator window settings\n","Height = 460\n", "Width = 300\n", "ButtonxOneWidth = 9\n", "ButtonxTwoWidth = 18\n", "ButtonsHeight  = 2\n"]
+    default_config_list = ["#Calculator window settings\n","Height = 480\n", "Width = 300\n", "ButtonxOneWidth = 9\n", "ButtonxTwoWidth = 18\n", "ButtonsHeight  = 2\n"]
     config_file = open(resource_path("settings.txt"), "w")
     for config in default_config_list:
         config_file.write(config)

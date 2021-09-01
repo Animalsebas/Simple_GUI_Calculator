@@ -1,5 +1,5 @@
 #Calculator window settings
-Height = 460
+Height = 480
 Width = 300
 ButtonxOneWidth = 9
 ButtonxTwoWidth = 18
