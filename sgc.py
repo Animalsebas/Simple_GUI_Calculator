@@ -1,3 +1,7 @@
+# Baskerville Inc.
+# Porgrammers
+# - SH
+version = "v1.4"
 from tkinter import *
 from tkinter import messagebox
 import math
@@ -22,6 +26,8 @@ height_calcwin = ""
 Buttonwidthx1 = ""
 Buttonwidthx2 = ""
 ButtonHeight = ""
+holdres = False
+# Local path
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -30,14 +36,19 @@ def resource_path(relative_path):
 def GetNumber(Num):
     global First
     global Acum
+    global holdres
+    global Num1
+    global Num2
+    global OpCar
+    if First == False and holdres == True:
+        if OpCar=="":
+            GetCE()
     if First == True:
-        global Num1
         Num1 = Num1 + str(Num)
         Acum = Num1
         screen_calc.configure(text=str(Num1))
         screenA_calc.configure(text=str(Acum))
     else:
-        global Num2
         Num2 = Num2 + str(Num)
         screen_calc.configure(text=str(Num2))
 #Operation Characters: +, -, /, x
@@ -138,6 +149,7 @@ def Equal():
     global Num2
     global First
     global Acum
+    global holdres
     Acum = ""
     if OpCar == "+":
         res = float(Num1)+float(Num2)
@@ -171,6 +183,7 @@ def Equal():
     Num2 = ""
     res = ""
     First = False
+    holdres = True
 #Settings protocol
 def OpenSettings():
     buttonSettings.configure(state= DISABLED)
@@ -220,7 +233,6 @@ def OpenSettings():
     settings_win.geometry("250x450")
     settings_win.resizable(True, True)
     settings_win.title("Settings")
-    settings_win.iconbitmap(resource_path("windowIcon.ico"))
     settings_win.configure(bg="gray20")
     labeltitle1 = Label(settings_win, text="Calculator Window Settings", width="25")
     labeltitle1.pack(pady=2)
@@ -319,7 +331,6 @@ Get_Calcwin_sizes()
 calc_win.geometry(size_calcwin)
 calc_win.resizable(True, True)
 calc_win.title("Simple GUI Calculator")
-calc_win.iconbitmap(resource_path("windowIcon.ico"))
 calc_win.configure(bg="gray20")
 #Settings button
 buttonSettings= Button(calc_win, text="Settings", width=18, height=1, command=OpenSettings)
@@ -379,7 +390,7 @@ buttonDot.grid(row=7,column=2)
 buttonEqual= Button(calc_win, text="=", width=Buttonwidthx1, height=ButtonHeight, command=Equal)
 buttonEqual.grid(row=7,column=3)
 #info
-info_label = Label(calc_win, text="Baskerville Inc. SH. v1.3", width=21, height=1, bg="gray", anchor="w", fg="white")
+info_label = Label(calc_win, text="Baskerville Inc. SH. "+version, width=21, height=1, bg="gray", anchor="w", fg="white")
 info_label.grid(row=8, columnspan=4, column=0)
 ##########################################
 #Key Bindings and Hover tips
